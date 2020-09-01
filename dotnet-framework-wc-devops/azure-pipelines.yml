@@ -24,37 +24,13 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build an image
       inputs:
-        command: buildAndPush
-        repository: '$(imageRepository)'
+        command: build
+        # repository: '$(imageRepository)'
         dockerfile: $(dockerfilePath)
-        containerRegistry: '$(dockerRegistryServiceConnection)'
+        # containerRegistry: '$(dockerRegistryServiceConnection)'
         buildContext: .
         tags: |
           $(tag)
   
-- stage: Deploy
-  displayName: Deploy to App Service and Azure SQL
-  jobs:
-  - job: Deploy
-    displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-
-    - task: AzureWebAppContainer@1
-      inputs:
-        azureSubscription: '$(azureSubscriptionName)'
-        appName: '$(applicationName)'
-        containers: '$(containerRegistry)/$(imageRepository):$(tag)'
-
-    - task: SqlAzureDacpacDeployment@1
-      inputs:
-        azureSubscription: '$(azureSubscriptionName)'
-        AuthenticationType: 'connectionString'
-        ConnectionString: '$(azureSQLConnectionString)'
-        deployType: 'DacpacTask'
-        DeploymentAction: 'Publish'
-        DacpacFile: '$(Build.SourcesDirectory)/data.dacpac'
-        IpDetectionMethod: 'AutoDetect'
