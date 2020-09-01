@@ -8,7 +8,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'your-auto-populated-service-connection-number'
   azureSubscriptionName: 'your-azure-subscription-name'
-  dockerfilePath: '$(Build.SourcesDirectory)/taskapp/taskapp/Dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/dotnet-framework-wc-devops/taskapp/taskapp/Dockerfile'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
