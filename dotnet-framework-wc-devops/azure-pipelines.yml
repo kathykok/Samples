@@ -30,7 +30,7 @@ stages:
         # repository: '$(imageRepository)'
         dockerfile: $(dockerfilePath)
         # containerRegistry: '$(dockerRegistryServiceConnection)'
-        buildContext: /dotnet-framework-wc-devops
+        buildContext: $(Build.SourcesDirectory)/dotnet-framework-wc-devops
         tags: |
           $(tag)
   
